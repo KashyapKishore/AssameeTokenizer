@@ -152,7 +152,7 @@ You can also use the Assamese tokenizer directly within your Python code. Here's
 
 ### Special Cases Handled
 
-- **Apostrophes**: Identifies when apostrophes are part of words (e.g., "অ'")
+- **Apostrophes**: Identifies when apostrophes are part of words (e.g., "ৰেডিঅ'")
 - **Hyphens**: Determines whether hyphens connect compound words or serve as separate punctuation
 - **Periods**: Distinguishes between sentence-ending periods, abbreviation periods, and decimal points
 - **Colons**: Identifies time formats versus other uses of colons
@@ -163,6 +163,7 @@ You can also use the Assamese tokenizer directly within your Python code. Here's
 This tokenizer is particularly useful for:
 
 - Natural Language Processing (NLP) for Assamese
+- Part-of-speech (POS) in Assamese 
 - Machine Translation systems
 - Text-to-Speech applications
 - Information Retrieval systems
