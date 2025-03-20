@@ -143,14 +143,14 @@ You can also use the Assamese tokenizer directly within your Python code. Here's
 
 ## Technical Details
 
-### Tokenization Process
+## Tokenization Process
 
 1. **Preprocessing**: Normalizes text, handles special characters, and prepares for tokenization
 2. **Character-by-Character Analysis**: Examines each character in context to determine token boundaries
 3. **Special Case Handling**: Applies rules for language-specific features
 4. **Token Extraction**: Produces a list of tokens based on the analysis
 
-### Special Cases Handled
+## Special Cases Handled
 
 - **Apostrophes**: Identifies when apostrophes are part of words (e.g., "অ'")
 - **Hyphens**: Determines whether hyphens connect compound words or serve as separate punctuation
