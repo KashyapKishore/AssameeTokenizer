@@ -44,46 +44,101 @@ No additional dependencies are required beyond the Python standard library.
 
 ## Usage
 
-### Command Line Interface
-
-The tokenizer can be used from the command line with the following options:
-
-```bash
-python assamese-tokenizer.py --input input.txt --output tokenized.txt
-python assamese-tokenizer.py --interactive
-```
-
-#### Arguments
-
-- `--input`, `-i`: Input file containing Assamese text
-- `--output`, `-o`: Output file for tokenized text
-- `--interactive`, `-int`: Run in interactive mode for testing single sentences
-- `--help`, `-h`: Show help message
+The script can be run in two modes: `interactive` (for single sentences) and `tokenize` (for file processing).
 
 ### Interactive Mode
 
-Interactive mode allows you to test the tokenizer with individual sentences:
+1.  **Run the script in interactive mode with a text input:**
 
-```bash
-python assamese-tokenizer.py --interactive
-```
+    ```bash
+    python assamesetokenizer.py --mode interactive --text "এইটো এটা উদাহৰণ বাক্য। ৯:৩০:১৫ বজাত ৰেলখন আহিব।"
+    ```
 
-This will prompt you to enter Assamese text and will display detailed tokenization results.
+    This will output:
+
+    ```
+    Preprocessed text: এইটো এটা উদাহৰণ বাক্য । ৯:৩০:১৫ বজাত ৰেলখন আহিব ।
+
+    Tokenization Analysis:
+    Input text: এইটো এটা উদাহৰণ বাক্য । ৯:৩০:১৫ বজাত ৰেলখন আহিব ।
+    Tokens: ['এইটো', 'এটা', 'উদাহৰণ', 'বাক্য', '।', '৯:৩০:১৫', 'বজাত', 'ৰেলখন', 'আহিব', '।']
+    Token boundaries: এইটো | এটা | উদাহৰণ | বাক্য | । | ৯:৩০:১৫ | বজাত | ৰেলখন | আহিব | ।
+    Number of tokens: 10
+
+    Character-level analysis:
+    এইটো|এটা|উদাহৰণ|বাক্য|।|৯:৩০:১৫|বজাত|ৰেলখন|আহিব|।
+    ```
+
+2. Now you can test different assamese sentences to observe the character level anaysis and the tokenization.
+
+### Tokenize File Mode
+
+1.  **Prepare your input file:**
+    Create a text file (e.g., `input.txt`) containing Assamese text, with each sentence on a new line.
+
+    ```
+    অসম এখন ৰাজ্য।
+    ইয়াত বহুত নদী আছে।
+    ব্ৰহ্মপুত্ৰ অসমৰ ডাঙৰ নদী।
+    ```
+
+2.  **Run the script in tokenize mode:**
+
+    ```bash
+    python assamesetokenizer.py --mode tokenize --src input.txt --tgt output.txt
+    ```
+
+    This will process the `input.txt` file, tokenize the text, and save the tokenized output to `output.txt`.
+
+3.  **Check the output file:**
+    The `output.txt` file will contain the tokenized text, with each token separated by a space.
+
+    ```
+    অসম এখন ৰাজ্য ।
+    ইয়াত বহুত নদী আছে ।
+    ব্ৰহ্মপুত্ৰ অসমৰ ডাঙৰ নদী ।
 
 ### Programmatic Usage
 
-You can also import and use the tokenizer in your Python code:
+You can also use the Assamese tokenizer directly within your Python code. Here's how you can import and use the `tokenize_assamese` and `preprocess_text` functions:
 
-```python
-from assamese_tokenizer import tokenize_assamese, preprocess_text
+1.  **Import the module:**
 
-# Preprocess and tokenize text
-text = "অসমীয়া ভাষাৰ এটা উদাহৰণ।"
-preprocessed_text = preprocess_text(text)
-tokens = tokenize_assamese(preprocessed_text)
+    ```python
+    from assamese_tokenizer import tokenize_assamese, preprocess_text
+    ```
+    **Note:** make sure the `assamese-tokenizer.py` is in the same directory of your python file or added in the system path. if you want to use it as a module, rename the `assamese-tokenizer.py` to `assamese_tokenizer.py`
 
-print(tokens)
-# Output: ['অসমীয়া', 'ভাষাৰ', 'এটা', 'উদাহৰণ', '।']
+2.  **Preprocess and tokenize your text:**
+
+    ```python
+    assamese_text = "এইটো এটা উদাহৰণ বাক্য। ৯:৩০:১৫ বজাত ৰেলখন আহিব।"
+    
+    # Preprocess the text
+    preprocessed_text = preprocess_text(assamese_text)
+    print(f"Preprocessed text: {preprocessed_text}")
+    
+    # Tokenize the text
+    tokens = tokenize_assamese(preprocessed_text)
+    print(f"Tokens: {tokens}")
+    ```
+
+    This will output:
+
+    ```
+    Preprocessed text: এইটো এটা উদাহৰণ বাক্য । ৯:৩০:১৫ বজাত ৰেলখন আহিব ।
+    Tokens: ['এইটো', 'এটা', 'উদাহৰণ', 'বাক্য', '।', '৯:৩০:১৫', 'বজাত', 'ৰেলখন', 'আহিব', '।']
+    ```
+3. You can also tokenize a file.
+    ```python
+    from assamese_tokenizer import tokenize_file
+
+    input_file = "input.txt"
+    output_file = "output.txt"
+
+    tokenize_file(input_file, output_file)
+    ```
+    This will tokenize the input file and produce the tokenized output file.
 ```
 
 ## Technical Details
@@ -102,18 +157,6 @@ print(tokens)
 - **Periods**: Distinguishes between sentence-ending periods, abbreviation periods, and decimal points
 - **Colons**: Identifies time formats versus other uses of colons
 - **Quotation Marks**: Handles quotation marks as separate tokens
-
-## Examples
-
-Input:
-```
-ড৹ কিশোৰ কাশ্যপে গৌহাটী বিশ্ববিদ্যালয়ত কাম কৰে।
-```
-
-Output:
-```
-['ড৹', 'কিশোৰ', 'কাশ্যপে', 'গৌহাটী', 'বিশ্ববিদ্যালয়ত', 'কাম', 'কৰে', '।']
-```
 
 ## Applications
 
