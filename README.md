@@ -105,7 +105,7 @@ You can also use the Assamese tokenizer directly within your Python code. Here's
 1.  **Import the module:**
 
     ```python
-    from assamese_tokenizer import tokenize_assamese, preprocess_text
+    from assamesetokenizer import tokenize_assamese, preprocess_text
     ```
     **Note:** make sure the `assamese-tokenizer.py` is in the same directory of your python file or added in the system path. if you want to use it as a module, rename the `assamese-tokenizer.py` to `assamese_tokenizer.py`
 
